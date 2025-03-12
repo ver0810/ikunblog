@@ -1,23 +1,23 @@
 ---
 import '../styles/global.css';
-// 移除这行，暂时避免导入错误
-// import ThemeToggle from '../components/ThemeToggle.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const allPosts = await Astro.glob('./posts/*.md');
+allPosts.sort((a, b) => new Date(b.frontmatter.pubDate) - new Date(a.frontmatter.pubDate));
 ---
 
-<html lang="zh-cn">
+<html lang="zh-CN">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>IKUNBLOG</title>
+    <title>博客 - IKUNBLOG</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="/js/bubbles.js" defer></script>
   </head>
   <body>
     <div class="animated-background"></div>
     
-    <!-- 内联主题切换按钮 -->
+    <!-- 主题切换按钮 -->
     <button id="theme-toggle" class="theme-toggle" aria-label="切换主题">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" id="moon-icon"></path>
@@ -41,60 +41,45 @@ import '../styles/global.css';
             <li><a href="/">首页</a></li>
             <li><a href="/blog">博客</a></li>
             <li><a href="/about">关于</a></li>
-            <li><a href="/contact">联系</a></li>
           </ul>
         </nav>
       </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="welcome-container">
-          <h2>欢迎</h2><h2>来到我的博客</h2>
-          <p>在这里分享我的想法、创意和故事</p>
-        </div>
+    <main class="container">
+      <section class="blog-header glass-container">
+        <h1>我的博客文章</h1>
+        <p>欢迎阅读我的博客，这里记录了我的学习历程和思考。</p>
       </section>
-
-      <section class="featured-posts">
-        <h3>最新文章</h3>
-        <div class="post-grid">
-          {[1, 2, 3].map((i) => (
-            <article class="post-card glass-effect">
-              <div class="post-image" style={`background-image: url(/images/post-${i}.jpg)`}></div>
-              <div class="post-content">
-                <h4>博客文章标题 {i}</h4>
-                <p>这是一段简短的文章摘要，描述了这篇博客的主要内容...</p>
-                <a href={`/pages/posts/post-${i}`} class="read-more">阅读更多</a>
+      
+      <section class="post-grid">
+        {allPosts.map(post => (
+          <article class="post-card glass-effect">
+            {post.frontmatter.image && (
+              <div class="post-image" style={`background-image: url(${post.frontmatter.image.url})`}></div>
+            )}
+            <div class="post-content">
+              <h2>{post.frontmatter.title}</h2>
+              <div class="post-meta">
+                <span class="date">{new Date(post.frontmatter.pubDate).toLocaleDateString('zh-CN')}</span>
+                <span class="author">{post.frontmatter.author}</span>
               </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section class="newsletter glass-container">
-        <h3>订阅我的通讯</h3>
-        <p>获取最新的博客更新和特别内容</p>
-        <form>
-          <input type="email" placeholder="您的邮箱" required>
-          <button type="submit">订阅</button>
-        </form>
+              <p>{post.frontmatter.description}</p>
+              <div class="tags">
+                {post.frontmatter.tags && post.frontmatter.tags.map(tag => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+              <a href={post.url} class="read-more">阅读更多</a>
+            </div>
+          </article>
+        ))}
       </section>
     </main>
 
     <footer class="glass-effect">
       <div class="container">
         <p>&copy; {new Date().getFullYear()} IKUN博客</p>
-        <div class="social-links">
-          <a href="#" aria-label="Twitter">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-          </a>
-          <a href="#" aria-label="Instagram">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-          </a>
-          <a href="#" aria-label="GitHub">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-          </a>
-        </div>
       </div>
     </footer>
 
@@ -124,7 +109,107 @@ import '../styles/global.css';
     </script>
 
     <style>
-      /* 主题切换按钮样式 */
+      /* 博客页面样式 */
+      .blog-header {
+        text-align: center;
+        margin: 2rem 0;
+        padding: 3rem 2rem;
+      }
+      
+      .blog-header h1 {
+        font-size: 2.5rem;
+        color: var(--color-primary);
+        margin-bottom: 1rem;
+      }
+      
+      .blog-header p {
+        font-size: 1.2rem;
+        color: var(--text-color-soft);
+      }
+      
+      .post-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 4rem;
+      }
+      
+      .post-card {
+        overflow: hidden;
+        transition: var(--transition);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .post-card:hover {
+        transform: translateY(-10px);
+      }
+      
+      .post-image {
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+      }
+      
+      .post-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .post-content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--color-primary);
+      }
+      
+      .post-meta {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+        color: var(--text-color-soft);
+      }
+      
+      .post-content p {
+        margin-bottom: 1rem;
+        flex: 1;
+      }
+      
+      .tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+      }
+      
+      .tag {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--color-primary);
+        border-radius: 50px;
+        font-size: 0.75rem;
+      }
+      
+      .read-more {
+        display: inline-block;
+        color: var(--color-light-pink);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        align-self: flex-start;
+        margin-top: auto;
+      }
+      
+      .read-more:hover {
+        color: var(--color-primary);
+        transform: translateX(5px);
+      }
+      
+      /* 主题切换按钮 */
       .theme-toggle {
         position: fixed;
         bottom: 20px;
@@ -171,6 +256,12 @@ import '../styles/global.css';
       
       .theme-toggle.dark #moon-icon {
         display: block;
+      }
+      
+      @media (max-width: 768px) {
+        .post-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </body>
