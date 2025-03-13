@@ -1,0 +1,18 @@
+<!-- 预加载主题脚本，消除闪烁问题 -->
+<script is:inline>
+  (function() {
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+    // 确定要使用的主题
+    const themeToApply = savedTheme === "dark" || (!savedTheme && prefersDark)
+      ? "dark" 
+      : "light";
+    
+    // 立即应用主题，防止闪烁
+    document.documentElement.setAttribute("data-theme", themeToApply);
+    if(themeToApply === "dark") {
+      document.documentElement.classList.add("dark-theme");
+    }
+  })();
+</script>

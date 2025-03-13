@@ -1,266 +1,347 @@
 ---
-import '../styles/global.css';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ThemePreloader from "../components/ThemePreloader.astro";
+import ThemeStyles from "../components/ThemeStyles.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 
-const allPosts = await Astro.glob('./posts/*.md');
-allPosts.sort((a, b) => new Date(b.frontmatter.pubDate) - new Date(a.frontmatter.pubDate));
+const allPosts = await Astro.glob("./posts/*.md");
+allPosts.sort(
+  (a, b) => new Date(b.frontmatter.pubDate) - new Date(a.frontmatter.pubDate)
+);
+
 ---
 
 <html lang="zh-CN">
   <head>
-    <meta charset="utf-8"/>
+    <!-- 预加载主题，防止闪烁 -->
+    <ThemePreloader />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>博客 - IKUNBLOG</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- 导入主题样式组件 -->
+    <ThemeStyles />
   </head>
   <body>
-    <div class="animated-background"></div>
-    
-    <!-- 主题切换按钮 -->
-    <button id="theme-toggle" class="theme-toggle" aria-label="切换主题">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" id="moon-icon"></path>
-        <circle cx="12" cy="12" r="5" id="sun-circle"></circle>
-        <line x1="12" y1="1" x2="12" y2="3" id="sun-line-1"></line>
-        <line x1="12" y1="21" x2="12" y2="23" id="sun-line-2"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" id="sun-line-3"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" id="sun-line-4"></line>
-        <line x1="1" y1="12" x2="3" y2="12" id="sun-line-5"></line>
-        <line x1="21" y1="12" x2="23" y2="12" id="sun-line-6"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" id="sun-line-7"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" id="sun-line-8"></line>
-      </svg>
-    </button>
-    
-    <header class="glass-effect">
-      <div class="container">
-        <h1>IKUNBLOG</h1>
-        <nav>
-          <ul>
-            <li><a href="/">首页</a></li>
-            <li><a href="/blog">博客</a></li>
-            <li><a href="/about">关于</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <div class="page-container">
+      <div class="content-wrap">
+        <!-- 使用主题切换组件 -->
+        <ThemeToggle />
 
-    <main class="container">
-      <section class="blog-header glass-container">
-        <h1>我的博客文章</h1>
-        <p>欢迎阅读我的博客，这里记录了我的学习历程和思考。</p>
-      </section>
-      
-      <section class="post-grid">
-        {allPosts.map(post => (
-          <article class="post-card glass-effect">
-            {post.frontmatter.image && (
-              <div class="post-image" style={`background-image: url(${post.frontmatter.image.url})`}></div>
-            )}
-            <div class="post-content">
-              <h2>{post.frontmatter.title}</h2>
-              <div class="post-meta">
-                <span class="date">{new Date(post.frontmatter.pubDate).toLocaleDateString('zh-CN')}</span>
-                <span class="author">{post.frontmatter.author}</span>
-              </div>
-              <p>{post.frontmatter.description}</p>
-              <div class="tags">
-                {post.frontmatter.tags && post.frontmatter.tags.map(tag => (
-                  <span class="tag">{tag}</span>
-                ))}
-              </div>
-              <a href={post.url} class="read-more">阅读更多</a>
-            </div>
-          </article>
-        ))}
-      </section>
-    </main>
+        <header class="flat-header">
+          <div class="container">
+            <h1>IKUNBLOG</h1>
+            <nav>
+              <ul>
+                <li><a href="/">首页</a></li>
+                <li><a href="/blog" class="active">博客</a></li>
+                <li><a href="/about">关于</a></li>
+              </ul>
+            </nav>
+          </div>
+        </header>
 
-    <footer class="glass-effect">
-      <div class="container">
-        <p>&copy; {new Date().getFullYear()} IKUN博客</p>
+        <main class="container">
+          <section class="blog-header">
+            <h1>博客文章</h1>
+            <p>欢迎阅读我的博客，这里记录了我的学习历程和思考。</p>
+          </section>
+
+          <section class="post-list">
+            {
+              allPosts.map((post) => (
+                <article class="post-item">
+                  <div class="post-content">
+                    <a href={post.url} class="post-title-link">
+                      <h2>{post.frontmatter.title}</h2>
+                    </a>
+                    <div class="post-meta">
+                      <span class="date">
+                        {new Date(post.frontmatter.pubDate).toLocaleDateString(
+                          "zh-CN"
+                        )}
+                      </span>
+                      <span class="author">{post.frontmatter.author}</span>
+                    </div>
+                    <p class="post-description">
+                      {post.frontmatter.description}
+                    </p>
+                    <div class="tags">
+                      {post.frontmatter.tags &&
+                        post.frontmatter.tags.map((tag) => (
+                          <span class="tag">{tag}</span>
+                        ))}
+                    </div>
+                    <a href={post.url} class="read-more">
+                      阅读更多
+                    </a>
+                  </div>
+                </article>
+              ))
+            }
+          </section>
+        </main>
       </div>
-    </footer>
+
+      <footer class="flat-footer">
+        <div class="container">
+          <p>&copy; {new Date().getFullYear()} IKUN博客</p>
+        </div>
+      </footer>
+    </div>
 
     <script>
-      // 主题切换逻辑
-      document.addEventListener('DOMContentLoaded', function() {
-        const themeToggle = document.getElementById('theme-toggle');
-        const body = document.body;
-        
-        // 加载保存的主题
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        if (savedTheme === 'dark') {
-          body.classList.add('dark-theme');
-          themeToggle.classList.add('dark');
-        }
-        
-        themeToggle.addEventListener('click', () => {
-          // 切换主题类
-          body.classList.toggle('dark-theme');
-          themeToggle.classList.toggle('dark');
-          
-          // 保存当前主题设置
-          const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
-          localStorage.setItem('theme', currentTheme);
-        });
-      });
+      // 导入主题切换逻辑
+      import { initThemeToggle } from "../scripts/themeToggle.js";
+      
+      // 初始化主题切换功能
+      document.addEventListener("DOMContentLoaded", initThemeToggle);
     </script>
 
     <style>
+      :root {
+        --bg-color: #f8f9fa;
+        --card-bg: #ffffff;
+        --text-color: #333;
+        --text-color-soft: #6c757d;
+        --color-primary: #e83e8c;
+        --border-color: #e9ecef;
+        --border-radius: 8px;
+        --shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        --header-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .dark-theme {
+        --bg-color: #212529;
+        --card-bg: #343a40;
+        --text-color: #f8f9fa;
+        --text-color-soft: #ced4da;
+        --color-primary: #ff6bab;s
+        --border-color: #495057;
+      }
+
+      /* 页面容器样式，确保footer在底部 */
+      .page-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* 视口高度 */
+      }
+
+      .content-wrap {
+        flex: 1; /* 占用剩余空间 */
+      }
+
+      /* 简约页头 */
+      .flat-header {
+        background-color: var(--card-bg);
+        box-shadow: var(--header-shadow);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .flat-header h1 {
+        font-size: 1.8rem;
+        margin: 0;
+        color: var(--color-primary);
+      }
+
+      /* 简约卡片 */
+      .post-card {
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--border-color);
+      }
+
+      .post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* 简约页脚 */
+      .flat-footer {
+        background-color: var(--card-bg);
+        border-top: 1px solid var(--border-color);
+        padding: 1.5rem 0;
+        text-align: center;
+        margin-top: 2rem;
+      }
+
       /* 博客页面样式 */
       .blog-header {
         text-align: center;
         margin: 2rem 0;
-        padding: 3rem 2rem;
+        padding: 2rem 1rem;
+        border-bottom: 1px solid var(--border-color);
       }
-      
+
       .blog-header h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         color: var(--color-primary);
         margin-bottom: 1rem;
       }
-      
+
       .blog-header p {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: var(--text-color-soft);
       }
-      
-      .post-grid {
+
+      .post-list {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 2rem;
         margin-bottom: 4rem;
       }
-      
-      .post-card {
-        overflow: hidden;
-        transition: var(--transition);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      .post-card:hover {
-        transform: translateY(-10px);
-      }
-      
+
       .post-image {
-        height: 200px;
+        height: 180px;
         background-size: cover;
         background-position: center;
       }
-      
+
       .post-content {
         padding: 1.5rem;
         flex: 1;
         display: flex;
         flex-direction: column;
       }
-      
+
+      .post-title-link {
+        text-decoration: none;
+        color: inherit;
+      }
+
       .post-content h2 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         margin-bottom: 0.5rem;
         color: var(--color-primary);
       }
-      
+
       .post-meta {
         display: flex;
         gap: 1rem;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.8rem;
         font-size: 0.85rem;
-        color: var(--text-color-soft);
+        color: var (--text-color-soft);
       }
-      
-      .post-content p {
+
+      .post-description {
         margin-bottom: 1rem;
         flex: 1;
+        line-height: 1.5;
       }
-      
+
       .tags {
         display: flex;
         gap: 0.5rem;
         flex-wrap: wrap;
         margin-bottom: 1rem;
       }
-      
+
       .tag {
         display: inline-block;
-        padding: 0.25rem 0.75rem;
-        background: rgba(255, 255, 255, 0.1);
+        padding: 0.15rem 0.6rem;
+        background-color: var(--tag-bg);
         color: var(--color-primary);
-        border-radius: 50px;
+        border-radius: 4px;
         font-size: 0.75rem;
-      }
-      
-      .read-more {
-        display: inline-block;
-        color: var(--color-light-pink);
-        text-decoration: none;
-        font-weight: 500;
-        transition: var(--transition);
-        align-self: flex-start;
-        margin-top: auto;
-      }
-      
-      .read-more:hover {
-        color: var(--color-primary);
-        transform: translateX(5px);
-      }
-      
-      /* 主题切换按钮 */
-      .theme-toggle {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 1000;
-        transition: transform 0.3s ease;
-        background: var(--glass-background);
-        backdrop-filter: var(--glass-backdrop);
-        -webkit-backdrop-filter: var(--glass-backdrop);
-        border: var(--glass-border);
-        box-shadow: var(--card-shadow);
-      }
-      
-      .theme-toggle:hover {
-        transform: scale(1.1);
-      }
-      
-      .theme-toggle svg {
-        width: 24px;
-        height: 24px;
-        color: var(--text-color);
-        transition: transform 0.5s ease;
-      }
-      
-      .theme-toggle.dark svg {
-        transform: rotate(180deg);
+        border: 1px solid var(--border-color);
       }
 
-      #moon-icon {
-        display: none;
+      .read-more {
+        display: inline-block;
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: transform 0.3s ease;
+        align-self: flex-start;
+        margin-top: auto;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid transparent;
       }
-      
-      .theme-toggle.dark #sun-circle,
-      .theme-toggle.dark [id^="sun-line"] {
-        display: none;
+
+      .read-more:hover {
+        border-bottom-color: var(--color-primary);
+        transform: translateX(5px);
       }
-      
-      .theme-toggle.dark #moon-icon {
-        display: block;
+
+      /* 导航当前页面高亮 */
+      nav ul li a.active {
+        color: var(--color-primary);
+        font-weight: 600;
+        position: relative;
       }
-      
+
+      nav ul li a.active::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--color-primary);
+      }
+
+      /* 导航菜单 */
+      nav ul {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      nav a {
+        color: var(--text-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      nav a:hover {
+        color: var(--color-primary);
+      }
+
+      /* 容器布局 */
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      header .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
       @media (max-width: 768px) {
-        .post-grid {
+        .post-list {
           grid-template-columns: 1fr;
+        }
+
+        header .container {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        nav ul {
+          margin-top: 1rem;
         }
       }
     </style>

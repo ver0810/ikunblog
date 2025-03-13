@@ -1,8 +1,22 @@
 ---
+// 无需Props
 ---
+
 <button id="theme-toggle" class="theme-toggle" aria-label="切换主题">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" id="moon-icon"></path>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path
+      d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+      id="moon-icon"></path>
     <circle cx="12" cy="12" r="5" id="sun-circle"></circle>
     <line x1="12" y1="1" x2="12" y2="3" id="sun-line-1"></line>
     <line x1="12" y1="21" x2="12" y2="23" id="sun-line-2"></line>
@@ -16,6 +30,40 @@
 </button>
 
 <style>
+  /* 主题切换按钮 */
+  .theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+  }
+
+  .theme-toggle:hover {
+    transform: scale(1.1);
+  }
+
+  .theme-toggle svg {
+    width: 22px;
+    height: 22px;
+    color: var(--text-color);
+    transition: transform 0.5s ease;
+  }
+
+  .theme-toggle.dark svg {
+    transform: rotate(180deg);
+  }
+
   #moon-icon {
     display: none;
   }

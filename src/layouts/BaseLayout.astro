@@ -1,9 +1,8 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import '../styles/global.css';
-const pageTitle = "首页";
+import "../styles/global.css";
+const { pageTitle, activePage } = Astro.props;
 ---
+
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
@@ -13,11 +12,581 @@ const pageTitle = "首页";
     <title>{pageTitle}</title>
   </head>
   <body>
-    <Header />
-    <h1>{pageTitle}</h1>
-    <Footer />
+    <div class="page-container">
+      <div class="content-wrap">
+        <!-- 内联主题切换按钮 -->
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换主题">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+              id="moon-icon"></path>
+            <circle cx="12" cy="12" r="5" id="sun-circle"></circle>
+            <line x1="12" y1="1" x2="12" y2="3" id="sun-line-1"></line>
+            <line x1="12" y1="21" x2="12" y2="23" id="sun-line-2"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" id="sun-line-3"
+            ></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" id="sun-line-4"
+            ></line>
+            <line x1="1" y1="12" x2="3" y2="12" id="sun-line-5"></line>
+            <line x1="21" y1="12" x2="23" y2="12" id="sun-line-6"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" id="sun-line-7"
+            ></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" id="sun-line-8"
+            ></line>
+          </svg>
+        </button>
+
+        <header class="flat-header">
+          <div class="container">
+            <h1>IKUNBLOG</h1>
+            <nav>
+              <ul>
+                <li><a href="/" class={activePage === "home" ? "active" : ""}>首页</a></li>
+                <li><a href="/blog" class={activePage === "blog" ? "active" : ""}>博客</a></li>
+                <li><a href="/about" class={activePage === "about" ? "active" : ""}>关于</a></li>
+              </ul>
+            </nav>
+          </div>
+        </header>
+
+        <main class="container">
+          <slot />
+        </main>
+      </div>
+
+      <footer class="flat-footer">
+        <div class="container">
+          <p>&copy; {new Date().getFullYear()} IKUN博客</p>
+          <div class="social-links">
+            <a href="#" aria-label="Twitter">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                  d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"
+                ></path></svg
+              >
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><rect x="2" y="2" width="20" height="20" rx="5" ry="5"
+                ></rect><path
+                  d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                ></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"
+                ></line></svg
+              >
+            </a>
+            <a href="#" aria-label="GitHub">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                ></path></svg
+              >
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
     <script>
-      import "../scripts/menu.js";
+      // 主题切换逻辑
+      document.addEventListener("DOMContentLoaded", function () {
+        const themeToggle = document.getElementById("theme-toggle");
+        const body = document.body;
+
+        // 加载保存的主题
+        const savedTheme = localStorage.getItem("theme") || "light";
+        if (savedTheme === "dark") {
+          body.classList.add("dark-theme");
+          themeToggle.classList.add("dark");
+        }
+
+        themeToggle.addEventListener("click", () => {
+          // 切换主题类
+          body.classList.toggle("dark-theme");
+          themeToggle.classList.toggle("dark");
+
+          // 保存当前主题设置
+          const currentTheme = body.classList.contains("dark-theme")
+            ? "dark"
+            : "light";
+          localStorage.setItem("theme", currentTheme);
+        });
+      });
     </script>
+
+    <style>
+      :root {
+        --bg-color: #f8f9fa;
+        --card-bg: #ffffff;
+        --text-color: #333;
+        --text-color-soft: #6c757d;
+        --color-primary: #e83e8c;
+        --border-color: #e9ecef;
+        --border-radius: 8px;
+        --shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        --header-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        --text--gradient: linear-gradient(to right, #ff6bab, #833ab4);
+      }
+
+      .dark-theme {
+        --bg-color: #212529;
+        --card-bg: #343a40;
+        --text-color: #f8f9fa;
+        --text-color-soft: #ced4da;
+        --color-primary: #ff6bab;
+        --border-color: #495057;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: "Poppins", sans-serif;
+        line-height: 1.6;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* 页面容器样式，确保footer在底部 */
+      .page-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* 视口高度 */
+      }
+
+      .content-wrap {
+        flex: 1; /* 占用剩余空间 */
+      }
+
+      /* 导航当前页面高亮 */
+      nav ul li a.active {
+        color: var(--color-primary);
+        font-weight: 600;
+        position: relative;
+      }
+
+      nav ul li a.active::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--color-primary);
+      }
+
+      /* 标题和导航 */
+      .flat-header {
+        background-color: var(--card-bg);
+        box-shadow: var(--header-shadow);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .flat-header h1 {
+        font-size: 1.8rem;
+        margin: 0;
+        color: var(--color-primary);
+      }
+
+      nav ul {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      nav a {
+        color: var(--text-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      nav a:hover {
+        color: var(--color-primary);
+      }
+
+      /* 英雄区域 */
+      .hero {
+        text-align: center;
+        padding: 4rem 1rem;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .welcome-container h2 {
+        font-size: 2.5rem;
+        color: var (--color-primary);
+        margin: 0 0 0.5rem 0;
+        line-height: 1.2;
+      }
+
+      .welcome-container p {
+        font-size: 1.2rem;
+        color: var(--text-color-soft);
+        max-width: 600px;
+        margin: 1rem auto;
+      }
+
+      /* 欢迎文字渐变效果 */
+      .welcome-text {
+        font-size: 2.5rem;
+        background-image: linear-gradient(to right, #ff7eb3, #7928ca, #4361ee);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        font-weight: 700;
+        text-shadow: none; /* 移除任何阴影 */
+        margin-bottom: 0.5rem;
+        animation: shimmer 3s linear infinite;
+      }
+
+      /* 技术栈展示行 */
+
+      .tech-skills {
+        margin: 3rem 0 1rem;
+        text-align: center;
+      }
+
+      .tech-skills h3 {
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+        color: var(--text-color);
+        opacity: 0.8;
+      }
+
+      .tech-icons {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .tech-icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.3s ease;
+      }
+
+      .tech-icon:hover {
+        transform: translateY(-5px);
+      }
+
+      .tech-icon svg {
+        color: var(--color-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .tech-icon span {
+        font-size: 0.9rem;
+        color: var(--text-color-soft);
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* 文章卡片 */
+      .featured-posts {
+        margin-bottom: 4rem;
+      }
+
+      .featured-posts h3 {
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        color: var(--text-color);
+      }
+
+      .post-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .post-card {
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--border-color);
+      }
+
+      .post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .post-image {
+        height: 180px;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .post-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .post-content h4 {
+        font-size: 1.4rem;
+        margin-top: 0;
+        margin-bottom: 0.8rem;
+        color: var(--color-primary);
+      }
+
+      .post-content p {
+        margin-bottom: 1rem;
+        flex: 1;
+      }
+
+      .read-more {
+        display: inline-block;
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: transform 0.3s ease;
+        align-self: flex-start;
+        margin-top: auto;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid transparent;
+      }
+
+      .read-more:hover {
+        border-bottom-color: var(--color-primary);
+        transform: translateX(5px);
+      }
+
+      /* 通讯订阅 */
+      .newsletter {
+        max-width: 600px;
+        margin: 2rem auto 4rem;
+        padding: 2rem;
+        text-align: center;
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+      }
+
+      .newsletter h3 {
+        margin-top: 0;
+        color: var(--color-primary);
+      }
+
+      .newsletter form {
+        display: flex;
+        max-width: 500px;
+        margin: 1.5rem auto 0;
+      }
+
+      .newsletter input {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius) 0 0 var(--border-radius);
+        background: var(--bg-color);
+        color: var(--text-color);
+      }
+
+      .newsletter button {
+        padding: 0.8rem 1.5rem;
+        background: var(--color-primary);
+        color: white;
+        border: none;
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+      }
+
+      .newsletter button:hover {
+        background-color: #d72779; /* 深一点的粉色 */
+      }
+
+      /* 页脚 */
+      .flat-footer {
+        background-color: var(--card-bg);
+        border-top: 1px solid var(--border-color);
+        padding: 1.5rem 0;
+        text-align: center;
+      }
+
+      .flat-footer .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .social-links a {
+        color: var(--text-color-soft);
+        transition: color 0.3s ease;
+      }
+
+      .social-links a:hover {
+        color: var(--color-primary);
+      }
+
+      /* 容器布局 */
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      header .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      /* 主题切换按钮 */
+      .theme-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow);
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.1);
+      }
+
+      .theme-toggle svg {
+        width: 22px;
+        height: 22px;
+        color: var(--text-color);
+        transition: transform 0.5s ease;
+      }
+
+      .theme-toggle.dark svg {
+        transform: rotate(180deg);
+      }
+
+      #moon-icon {
+        display: none;
+      }
+
+      .theme-toggle.dark #sun-circle,
+      .theme-toggle.dark [id^="sun-line"] {
+        display: none;
+      }
+
+      .theme-toggle.dark #moon-icon {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .post-grid {
+          grid-template-columns: 1fr;
+        }
+
+        header .container {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        nav ul {
+          margin-top: 1rem;
+        }
+
+        .newsletter form {
+          flex-direction: column;
+        }
+
+        .newsletter input {
+          border-radius: var(--border-radius);
+          margin-bottom: 1rem;
+        }
+
+        .newsletter button {
+          border-radius: var(--border-radius);
+        }
+
+        .flat-footer .container {
+          flex-direction: column;
+        }
+
+        .social-links {
+          margin-top: 1rem;
+        }
+      }
+    </style>
   </body>
 </html>

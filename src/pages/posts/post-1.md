@@ -10,10 +10,6 @@ image:
 tags: ["astro", "blogging", "learning in public"]
 ---
 
-# 我的第一篇博客文章
-
-发表于：2022-07-01
-
 欢迎来到我学习关于 Astro 的新博客！在这里，我将分享我建立新网站的学习历程。
 
 ## 我做了什么
@@ -27,3 +23,22 @@ tags: ["astro", "blogging", "learning in public"]
 ## 下一步计划
 
 我将完成 Astro 教程，然后继续编写更多内容。关注我以获取更多信息。
+
+```python
+
+import numpy as np
+
+for i in range(1, 100):
+    print("hello world")
+
+
+```
+
+
+> $$min_\theta \frac{1}{m} \left[ \sum_{i=1}^m y^{(i)} (-\log h(0)(x^{(i)})) + (1-\log (1-h_0(x^{(i)})))\right]  + \frac{\lambda}{2m}\sum_{j=1}^n \theta_j^2$$
+>
+
+
+student | name | age | hobby
+---- | ----- | ---- | -----
+true | ikun | 20 | chang, tiao
