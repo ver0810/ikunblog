@@ -1,0 +1,40 @@
+---
+import Footer from "../components/layouts/Footer.astro";
+import Header from "../components/layouts/Header.astro";
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&family=Noto+Sans+SC&family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="theme-color" content="#eff1f5">
+    <title>Astro Basics</title>
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- Sidebar for Docs Series -->
+      <!-- <slot class="sidebar" /> -->
+      <!-- Main container for the page content -->
+      <div id="container" class="min-w-3xl relative m-auto max-w-4xl grow">
+        <div
+          class="m-auto grid min-h-screen md:grid-rows-[auto_auto_1fr] px-4 md:px-8 md:pt-4"
+        >
+          <Header />
+          <main id="main" class="relative flex-grow mt-32 md:mt-[3.5rem]">
+            <slot />
+          </main>
+          <Footer />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

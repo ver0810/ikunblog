@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import PostLayout from "../../layouts/BlogPost.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("post");
+  return posts.map((post: any) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+// 从 props 中获取文章数据
+const { post } = Astro.props;
+
+// 如果文章未找到，返回 404
+if (!post) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+
+// 渲染文章内容
+const { Content } = await post.render();
+---
+
+<PostLayout post={post}>
+  <Content />
+</PostLayout>

@@ -1,0 +1,379 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@config "../../tailwind.config.ts";
+
+@font-face {
+  font-family: "SFProRounded";
+  src: url("../assets/fonts/SF-Pro-Rounded-Regular.latin.base.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  /* font-display: swap; */
+}
+
+@font-face {
+  font-family: "SFProRounded";
+  src: url("../assets/fonts/SF-Pro-Rounded-Medium.latin.base.ttf")
+    format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  /* font-display: swap; */
+}
+
+@font-face {
+  font-family: "SFProRounded";
+  src: url("../assets/fonts/SF-Pro-Rounded-Semibold.latin.base.ttf")
+    format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  /* font-display: swap; */
+}
+
+@font-face {
+  font-family: "SFProRounded";
+  src: url("../assets/fonts/SF-Pro-Rounded-Bold.latin.base.ttf")
+    format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  /* font-display: swap; */
+}
+
+@font-face {
+  font-family: "SFProRounded";
+  src: url("../assets/fonts/SF-Pro-Rounded-Regular.latin.extend.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  /* font-display: swap; */
+}
+
+@font-face {
+  font-family: "SFProRounded";
+  src: url("../assets/fonts/SF-Pro-Rounded-Medium.latin.extend.ttf")
+    format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  /* font-display: swap; */
+}
+
+@font-face {
+  font-family: "SFProRounded";
+  src: url("../assets/fonts/SF-Pro-Rounded-Semibold.latin.extend.ttf")
+    format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  /* font-display: swap; */
+}
+
+@font-face {
+  font-family: "SFProRounded";
+  src: url("../assets/fonts/SF-Pro-Rounded-Bold.latin.extend.ttf")
+    format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  /* font-display: swap; */
+}
+
+@font-face {
+  font-family: "CascadiaCode";
+  src: url("../assets/fonts/CascadiaCode.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root,
+  :root[data-theme="light"] {
+    /* Catppuccin Latte 主题颜色 */
+    --ctp-rosewater: #dc8a78;
+    --ctp-flamingo: #dd7878;
+    --ctp-pink: #ea76cb;
+    --ctp-mauve: #8839ef;
+    --ctp-red: #d20f39;
+    --ctp-maroon: #e64553;
+    --ctp-peach: #fe640b;
+    --ctp-yellow: #df8e1d;
+    --ctp-green: #40a02b;
+    --ctp-teal: #179299;
+    --ctp-sky: #04a5e5;
+    --ctp-sapphire: #209fb5;
+    --ctp-blue: #1e66f5;
+    --ctp-lavender: #7287fd;
+    --ctp-text: #4c4f69;
+    --ctp-subtext1: #5c5f77;
+    --ctp-subtext0: #6c6f85;
+    --ctp-overlay2: #7c7f93;
+    --ctp-overlay1: #8c8fa1;
+    --ctp-overlay0: #9ca0b0;
+    --ctp-surface2: #acb0be;
+    --ctp-surface1: #bcc0cc;
+    --ctp-surface0: #ccd0da;
+    --ctp-base: #eff1f5;
+    --ctp-mantle: #e6e9ef;
+    --ctp-crust: #dce0e8;
+
+    /* prose */
+    --v-white-100: #ffffff;
+    --v-white-200: #fafafa;
+    --v-gray-1000: #171717;
+    --v-gray-900: #666666;
+    --v-gray-800: #7d7d7d;
+    --v-gray-700: #8f8f8f;
+    --v-gray-600: #a8a8a8;
+    --v-gray-500: #c9c9c9;
+    --v-gray-400: #eaeaea;
+    --v-purple-700: #8e4ec6;
+    --v-purple-900: #7820bc;
+    --v-red-700: #e5484d;
+    --v-red-900: #cb2a2f;
+    --v-amber-700: #f5b047;
+    --v-amber-900: #a35200;
+    --v-green-700: #45a557;
+    --v-green-900: #297a3a;
+    --v-blue-600: #52aeff;
+    --v-blue-700: #0072f5;
+    --v-blue-900: #0068d6;
+    --v-background: #282c34;
+
+    --monospace: "GeistMono", "LXGWWenKaiMono";
+
+    /* 浅色主题变量 */
+    --color-background: #fff;
+    --color-text: var(--ctp--text);
+    --color-code-bg: var(--ctp--base);
+  }
+
+  :root[data-theme="dark"] .dark {
+    /* Catppuccin Mocha 主题颜色 */
+    --ctm-rosewater: #dc8a78;
+    --ctm-flamingo: #dd7878;
+    --ctm-pink: #ea76cb;
+    --ctm-mauve: #8839ef;
+    --ctm-red: #d20f39;
+    --ctm-maroon: #e64553;
+    --ctm-peach: #fe640b;
+    --ctm-yellow: #df8e1d;
+    --ctm-green: #40a02b;
+    --ctm-teal: #179299;
+    --ctm-sky: #04a5e5;
+    --ctm-sapphire: #209fb5;
+    --ctm-blue: #1e66f5;
+    --ctm-lavender: #7287fd;
+    --ctm-text: #eff1f5;
+    --ctm-subtext1: #e6e9ef;
+    --ctm-subtext0: #dce0e8;
+    --ctm-overlay2: #d2d6de;
+    --ctm-overlay1: #c8ccd4;
+    --ctm-overlay0: #bec2ca;
+    --ctm-surface2: #b4b8c0;
+    --ctm-surface1: #aab0b8;
+    --ctm-surface0: #a0a6ae;
+    --ctm-base: #969ca4;
+    --ctm-mantle: #8c929a;
+    --ctm-crust: #828890;
+
+    /* 暗色主题变量 */
+    --color-background: #565957;
+    --color-text: var(--ctm--text);
+    --color-code-bg: var(--ctm--base);
+  }
+
+  /* 应用主题颜色 */
+  @layer base {
+    html {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body {
+      @apply bg-[var(--color-background)] text-[var(--ctp-text)] font-sans;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply text-[var(--ctp-text)];
+    }
+
+    a {
+      @apply text-[var(--ctp-blue)] hover:text-[var(--ctp-sky)];
+    }
+
+    .btn-primary {
+      @apply bg-[var(--ctp-blue)] text-[var(--ctp-base)] hover:bg-[var(--ctp-sky)];
+    }
+
+    .btn-secondary {
+      @apply bg-[var(--ctp-green)] text-[var(--ctp-base)] hover:bg-[var(--ctp-teal)];
+    }
+  }
+}
+
+.prose {
+  h1 {
+    font-size: 2.5rem;
+    line-height: 3.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+
+  h3 {
+    font-size: 1.5em;
+    line-height: 2rem;
+  }
+
+  h4 {
+    font-size: 1.25em;
+  }
+
+  h5 {
+    font-size: 1em;
+  }
+  h6 {
+    font-size: 1em;
+    color: var(--v-gray-900);
+  }
+
+  /* BLOCKQUOTE */
+  blockquote {
+    position: relative;
+    padding: 12px;
+    border: 1px solid var(--v-gray-500);
+    line-height: 1.4;
+    border-radius: 8px;
+    color: var(--v-gray-900);
+  }
+
+  blockquote::before {
+    position: absolute;
+    top: 50%;
+
+    transform: translateY(-55%) translateX(5%);
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\e826";
+  }
+  /* LINK */
+  a {
+    font-weight: 500;
+    color: var(--v-blue-700);
+    text-decoration: none;
+  }
+
+  a:hover {
+    background-image: linear-gradient(var(--v-blue-700), var(--v-blue-700));
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+  }
+
+  /* KBD */
+  kbd {
+    font-family: "GeistMono", "LXGWWenKai";
+    padding: 2px 8px;
+    vertical-align: baseline;
+    font-size: 0.9rem;
+    color: var(--v-white-100);
+    border: none;
+    box-shadow: none;
+    border-radius: 4px;
+    background-color: var(--v-gray-800);
+  }
+
+  /* HIGHTLIGHT */
+  mark {
+    background-color: var(--v-blue-600);
+    border-radius: 3px;
+  }
+
+  /* HORIZON */
+  hr {
+    margin: 10px 0px;
+    border: none;
+    border-bottom: 1px solid var(--v-gray-500);
+  }
+
+  /* LIST */
+  ul {
+    list-style: none;
+  }
+
+
+  ul li::before {
+    content: "";
+    background-color: #3d3d3d;
+  }
+
+  /* IMAGE */
+  img {
+    color: transparent;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  table {
+    margin: 15px auto;
+    line-height: 1.6em;
+    font-size: 0.875rem;
+    color: var(--v-gray-1000);
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  table td {
+    padding: 10px 10px;
+  }
+
+  thead th {
+    padding: 10px 10px;
+    margin-bottom: 2px;
+    font-weight: 400;
+    color: var(--v-gray-900);
+    border-top: 1px solid var(--v-gray-400);
+    border-bottom: 1px solid var(--v-gray-400) !important;
+    background-color: var(--v-white-200);
+  }
+
+  thead th:first-child {
+    border-left: 1px solid var(--v-gray-400);
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+
+  thead th:last-child {
+    border-right: 1px solid var(--v-gray-400);
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+
+  tbody tr:hover td {
+    background-color: var(--v-gray-400);
+  }
+
+  tbody tr:hover td:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+  tbody tr:hover td:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+
+  thead::after {
+    content: "";
+    display: block;
+    height: 5px;
+    width: 100%;
+  }
+}

@@ -1,0 +1,93 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import Base from "../layouts/Base.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+
+const tags = [
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+  "Test",
+];
+
+const posts = await getCollection('post');
+
+console.log(posts);
+---
+
+<Base>
+  <h1 class="title mb-6 flex items-center gap-2">Posts</h1>
+  <div class="grid gap-y-8 sm:grid-cols-[1fr_auto] sm:gap-x-8">
+    <section class="grow">
+      <h1>2025</h1>
+      <ul class="mb-8 mt-4 space-y-8 text-start">
+        {
+          posts.map((post) => (
+
+          <li>
+            <div class="flex flex-col">
+                <FormattedDate 
+				          class="text-sm shrink-0 text-lighter" 
+                  date={post.data.publishDate}
+                  dateTimeOptions={{
+                    // hour: "2-digit",
+                    // minute: "2-digit",
+                    year: "numeric",
+                    month: "long",
+                    day: "2-digit",
+                  }}
+			          />
+              <div class="font-medium text-accent-base mt-2.5">
+                <a href=`/posts/${post.slug}`>
+                  {post.data.title}
+                </a>
+              </div>
+              <p class="mt-0.5 line-clamp-2">
+                {post.data.description}
+              </p>
+            </div>
+          </li>
+
+          ))
+        }
+      </ul>
+    </section>
+
+    <aside class="md:min-w-[14rem] md:max-w-[14rem] md:basis-[14rem]">
+      <h4 class="title mb-4 flex gap-2">Tags</h4>
+      <ul class="flex flex-wrap gap-2">
+        {
+          tags.map((tag: any) => (
+            <li>
+              <a>
+                <div class="flex items-baseline pt-[0.075rem] drop-shadow-lg active:drop-shadow-none rounded-lg h-6 px-2 text-sm font-medium transition-colors bg-color-100 text-textColor hover:bg-accent-two hover:text-bgColor drop-shadow-none hover:drop-shadow-lg">
+                  <span class="h-full">#</span>
+                  Test
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
+  </div>
+  <nav class="flex items-center gap-x-4 font-medium text-accent justify-end">
+    <a> Next Page --> </a>
+  </nav>
+</Base>
