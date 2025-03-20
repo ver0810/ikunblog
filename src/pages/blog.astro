@@ -27,6 +27,12 @@ const tags = [
 ];
 
 const posts = await getCollection('post');
+const allPostsByDate = posts
+  .sort(
+    (a: any, b: any) =>
+      new Date(b.data.publishDate).getTime() -
+      new Date(a.data.publishDate).getTime()
+  )
 
 console.log(posts);
 ---
@@ -38,7 +44,7 @@ console.log(posts);
       <h1>2025</h1>
       <ul class="mb-8 mt-4 space-y-8 text-start">
         {
-          posts.map((post) => (
+          allPostsByDate.map((post) => (
 
           <li>
             <div class="flex flex-col">
@@ -53,8 +59,8 @@ console.log(posts);
                     day: "2-digit",
                   }}
 			          />
-              <div class="font-medium text-accent-base mt-2.5">
-                <a href=`/posts/${post.slug}`>
+              <div class="text-black-900 font-bold text-accent-base mt-2.5">
+                <a href=`/posts/${post.slug}` class="hover:underline">
                   {post.data.title}
                 </a>
               </div>

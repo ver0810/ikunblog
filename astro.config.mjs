@@ -4,14 +4,16 @@ import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import remarkMath from "remark-math";
 import rehypeMathjax from "rehype-mathjax";
-import netlify from "@astrojs/netlify/functions";
+import remarkObsidianCallout from "remark-obsidian-callout";
+import remarekEmjoi from "remark-emoji";
+import remarkCallout from "remark-callout";
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: netlify(),
-  output: 'static',
+  // adapter: netlify(),
+  // output: 'static',
   markdown: {
-    remarkPlugins: [remarkMath],
+    remarkPlugins: [ [remarkCallout, { types: ['note', 'warning', 'tip', 'error'] }], [remarkMath, remarkObsidianCallout]],
     rehypePlugins: [rehypeMathjax],
     shikiConfig: {
       theme: "catppuccin-frappe",
