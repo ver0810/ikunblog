@@ -30,6 +30,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
 
+      - name: Verify Build Output
+      run: ls dist # 检查 dist 文件夹是否存在
+
   disable_jekyll:
     runs-on: ubuntu-latest
     needs: build  # Add this line to specify the dependency
