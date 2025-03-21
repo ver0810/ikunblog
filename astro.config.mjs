@@ -10,8 +10,8 @@ import remarkCallout from "remark-callout";
 
 // https://astro.build/config
 export default defineConfig({
-  // adapter: netlify(),
-  // output: 'static',
+  site: 'https://ver0810.github.io',
+  base: 'verblog',
   markdown: {
     remarkPlugins: [ [remarkCallout, { types: ['note', 'warning', 'tip', 'error'] }], [remarkMath, remarkObsidianCallout]],
     rehypePlugins: [rehypeMathjax],
