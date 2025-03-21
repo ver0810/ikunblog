@@ -137,11 +137,6 @@
     --v-background: #282c34;
 
     --monospace: "GeistMono", "LXGWWenKaiMono";
-
-    /* 浅色主题变量 */
-    --color-background: #fff;
-    --color-text: var(--ctp--text);
-    --color-code-bg: var(--ctp--base);
   }
 
   :root[data-theme="dark"] .dark {
@@ -172,43 +167,36 @@
     --ctm-base: #969ca4;
     --ctm-mantle: #8c929a;
     --ctm-crust: #828890;
-
-    /* 暗色主题变量 */
-    --color-background: #565957;
-    --color-text: var(--ctm--text);
-    --color-code-bg: var(--ctm--base);
   }
 
-  /* 应用主题颜色 */
-  @layer base {
-    html {
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
+  /* 应用主题颜色 - 移除这里的@layer base */
+  html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 
-    body {
-      @apply bg-[var(--color-background)] text-[var(--ctp-text)] font-sans;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
+  body {
+    @apply bg-[var(--color-background)] text-[var(--ctp-text)] font-sans;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      @apply text-[var(--ctp-text)];
-    }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-[var(--ctp-text)];
+  }
 
-    a {
-      @apply text-[var(--ctp-blue)] hover:text-[var(--ctp-sky)];
-    }
+  a {
+    @apply text-[var(--ctp-blue)] hover:text-[var(--ctp-sky)];
+  }
 
-    .btn-primary {
-      @apply bg-[var(--ctp-blue)] text-[var(--ctp-base)] hover:bg-[var(--ctp-sky)];
-    }
+  .btn-primary {
+    @apply bg-[var(--ctp-blue)] text-[var(--ctp-base)] hover:bg-[var(--ctp-sky)];
+  }
 
-    .btn-secondary {
-      @apply bg-[var(--ctp-green)] text-[var(--ctp-base)] hover:bg-[var(--ctp-teal)];
-    }
+  .btn-secondary {
+    @apply bg-[var(--ctp-green)] text-[var(--ctp-base)] hover:bg-[var(--ctp-teal)];
   }
 }
