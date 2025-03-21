@@ -10,10 +10,8 @@ export async function getStaticPaths() {
   }));
 }
 
-// 从 props 中获取文章数据
 const { post } = Astro.props;
 
-// 如果文章未找到，返回 404
 if (!post) {
   return new Response(null, {
     status: 404,
@@ -21,7 +19,6 @@ if (!post) {
   });
 }
 
-// 渲染文章内容
 const { Content } = await post.render();
 ---
 
