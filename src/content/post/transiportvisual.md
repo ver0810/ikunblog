@@ -2,10 +2,6 @@
 title: '交通流量展示'
 publishDate: 2023-03-20
 description: '这是一个交通流量展示系统，用于深圳市的交通流量展示。'
-author: 'Astro 学习者'
-image:
-    url: 'https://docs.astro.build/assets/rose.webp'
-    alt: 'The Astro logo on a dark background with a pink glow.'
 tags: ["astro", "blogging", "learning in public"]
 ---
 
