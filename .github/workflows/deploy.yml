@@ -34,6 +34,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Create .nojekyll file to disable Jekyll
+        run: echo "" > .nojekyll
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
