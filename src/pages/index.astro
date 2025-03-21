@@ -69,7 +69,7 @@ const latestNotes = allNotes
         </div>
         <div class="flex justify-center space-x-4 mt-4">
           <a
-            href="/blog/"
+            href="/verblog/blog/"
             class="relative flex items-center justify-center h-8 px-4 rounded-lg shadow-lg hover:brightness-110 transition-all bg-gradient-to-r from-accent-one to-accent-two"
           >
             <span class="text-bgColor font-semibold"> Read Blog </span>
@@ -93,7 +93,7 @@ const latestNotes = allNotes
     <!-- Posts Section -->
     <section aria-label="Blog post list" class="'mt-[-100vh] pt-[100vh]'">
       <h2 class="title mb-6 text-xl text-accent-two">
-        <a href="/posts/">Posts</a>
+        <a href="/verblog/posts/">Posts</a>
       </h2>
       <ul class="space-y-4 md:space-y-2" role="list">
         {
@@ -111,7 +111,7 @@ const latestNotes = allNotes
       latestNotes.length > 0 && (
         <section class="mt-12">
           <h2 class="title mb-6 text-accent-two">
-            <a href="/notes/">Notes</a>
+            <a href="/verblog/notes/">Notes</a>
           </h2>
           <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
             {latestNotes.map((note: any) => (
