@@ -1,6 +1,6 @@
 ---
 title: "使用unsloth加速训练deepseek-r1-distill-qwen-1.5b"
-publishDate: 2025-3-22
+publishDate: 2025-03-22
 description: "通过使用unsloth 库来实现在笔记本上监督微调deepseek模型"
 tags: ['unsloth', 'deepseek', 'train']
 ---
